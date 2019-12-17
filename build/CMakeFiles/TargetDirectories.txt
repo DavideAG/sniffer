@@ -1,3 +1,0 @@
-/home/davide/Scrivania/lab8/sniffer/build/CMakeFiles/rebuild_cache.dir
-/home/davide/Scrivania/lab8/sniffer/build/CMakeFiles/sniffer.dir
-/home/davide/Scrivania/lab8/sniffer/build/CMakeFiles/edit_cache.dir
