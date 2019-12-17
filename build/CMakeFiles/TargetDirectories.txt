@@ -1,0 +1,3 @@
+/home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles/rebuild_cache.dir
+/home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles/packetcapture.dir
+/home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles/edit_cache.dir

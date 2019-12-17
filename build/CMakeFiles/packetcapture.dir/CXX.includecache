@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/davide/Scrivania/lab8/packetcapture/packetcapture.cpp
+packetcapture.h
+/home/davide/Scrivania/lab8/packetcapture/packetcapture.h
+
+/home/davide/Scrivania/lab8/packetcapture/packetcapture.h
+iostream
+-
+pcap.h
+-
+string
+-
+vector
+-
+
