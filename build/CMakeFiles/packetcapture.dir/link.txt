@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/packetcapture.dir/main.o CMakeFiles/packetcapture.dir/packetcapture.o  -o packetcapture -lpcap 

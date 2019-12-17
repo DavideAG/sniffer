@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/davide/Scrivania/lab8/packetcapture
+CMAKE_SOURCE_DIR = /home/davide/Scrivania/lab8/sniffer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/davide/Scrivania/lab8/packetcapture/build
+CMAKE_BINARY_DIR = /home/davide/Scrivania/lab8/sniffer/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles /home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/sniffer/build/CMakeFiles /home/davide/Scrivania/lab8/sniffer/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/sniffer/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,47 +111,47 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named packetcapture
+# Target rules for targets named sniffer
 
 # Build rule for target.
-packetcapture: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 packetcapture
-.PHONY : packetcapture
+sniffer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sniffer
+.PHONY : sniffer
 
 # fast build rule for target.
-packetcapture/fast:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/build
-.PHONY : packetcapture/fast
+sniffer/fast:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/build
+.PHONY : sniffer/fast
 
 # target to build an object file
-main.o:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/main.o
-.PHONY : main.o
+src/main.o:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/main.o
+.PHONY : src/main.o
 
 # target to preprocess a source file
-main.i:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/main.i
-.PHONY : main.i
+src/main.i:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/main.i
+.PHONY : src/main.i
 
 # target to generate assembly for a file
-main.s:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/main.s
-.PHONY : main.s
+src/main.s:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/main.s
+.PHONY : src/main.s
 
 # target to build an object file
-packetcapture.o:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/packetcapture.o
-.PHONY : packetcapture.o
+src/packetcapture.o:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/packetcapture.o
+.PHONY : src/packetcapture.o
 
 # target to preprocess a source file
-packetcapture.i:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/packetcapture.i
-.PHONY : packetcapture.i
+src/packetcapture.i:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/packetcapture.i
+.PHONY : src/packetcapture.i
 
 # target to generate assembly for a file
-packetcapture.s:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/packetcapture.s
-.PHONY : packetcapture.s
+src/packetcapture.s:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/packetcapture.s
+.PHONY : src/packetcapture.s
 
 # Help Target
 help:
@@ -160,14 +160,14 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... packetcapture"
+	@echo "... sniffer"
 	@echo "... edit_cache"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... packetcapture.o"
-	@echo "... packetcapture.i"
-	@echo "... packetcapture.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/packetcapture.o"
+	@echo "... src/packetcapture.i"
+	@echo "... src/packetcapture.s"
 .PHONY : help
 
 

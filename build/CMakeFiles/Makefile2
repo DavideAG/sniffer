@@ -59,45 +59,45 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/davide/Scrivania/lab8/packetcapture
+CMAKE_SOURCE_DIR = /home/davide/Scrivania/lab8/sniffer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/davide/Scrivania/lab8/packetcapture/build
+CMAKE_BINARY_DIR = /home/davide/Scrivania/lab8/sniffer/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/packetcapture.dir
+# Target rules for target CMakeFiles/sniffer.dir
 
 # All Build rule for target.
-CMakeFiles/packetcapture.dir/all:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/depend
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles --progress-num=1,2,3 "Built target packetcapture"
-.PHONY : CMakeFiles/packetcapture.dir/all
+CMakeFiles/sniffer.dir/all:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/depend
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/davide/Scrivania/lab8/sniffer/build/CMakeFiles --progress-num=1,2,3 "Built target sniffer"
+.PHONY : CMakeFiles/sniffer.dir/all
 
 # Include target in all.
-all: CMakeFiles/packetcapture.dir/all
+all: CMakeFiles/sniffer.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/packetcapture.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/packetcapture.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/packetcapture/build/CMakeFiles 0
-.PHONY : CMakeFiles/packetcapture.dir/rule
+CMakeFiles/sniffer.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/sniffer/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/sniffer.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/davide/Scrivania/lab8/sniffer/build/CMakeFiles 0
+.PHONY : CMakeFiles/sniffer.dir/rule
 
 # Convenience name for target.
-packetcapture: CMakeFiles/packetcapture.dir/rule
+sniffer: CMakeFiles/sniffer.dir/rule
 
-.PHONY : packetcapture
-
-# clean rule for target.
-CMakeFiles/packetcapture.dir/clean:
-	$(MAKE) -f CMakeFiles/packetcapture.dir/build.make CMakeFiles/packetcapture.dir/clean
-.PHONY : CMakeFiles/packetcapture.dir/clean
+.PHONY : sniffer
 
 # clean rule for target.
-clean: CMakeFiles/packetcapture.dir/clean
+CMakeFiles/sniffer.dir/clean:
+	$(MAKE) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/clean
+.PHONY : CMakeFiles/sniffer.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/sniffer.dir/clean
 
 .PHONY : clean
 

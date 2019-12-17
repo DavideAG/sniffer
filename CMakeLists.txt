@@ -1,22 +1,22 @@
-PROJECT(PACKETCAPTURE)
+PROJECT(sniffer)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 
 # Set source files
 SET(SOURCES
-	main.cpp
-	packetcapture.cpp
+	src/main.cpp
+	src/packetcapture.cpp
 )
 
 
 # Default directories for include files
 IF(WIN32)
 	INCLUDE_DIRECTORIES (
-		${PACKETCAPTURE_SOURCE_DIR}
-		${PACKETCAPTURE_SOURCE_DIR}/../WPdPack/Include
+		${SNIFFER_SOURCE_DIR}
+		${SNIFFER_SOURCE_DIR}/../WPdPack/Include
 	)
 ELSE(WIN32)
 	INCLUDE_DIRECTORIES (
-		${PACKETCAPTURE_SOURCE_DIR}
+		${SNIFFER_SOURCE_DIR}
 	)
 ENDIF(WIN32)
 
@@ -24,7 +24,7 @@ ENDIF(WIN32)
 # Default directories for linking
 #   (in Linux those are already in the system path)
 IF(WIN32)
-	LINK_DIRECTORIES(${PACKETCAPTURE_SOURCE_DIR}/../WPdPack/Lib)
+	LINK_DIRECTORIES(${SNIFFER_SOURCE_DIR}/../WPdPack/Lib)
 ENDIF(WIN32)
 
 
@@ -40,7 +40,7 @@ ENDIF(WIN32)
 
 # Create executable
 ADD_EXECUTABLE(
-	packetcapture
+	sniffer
 	${SOURCES}
 )
 
@@ -48,13 +48,13 @@ ADD_EXECUTABLE(
 # Link the executable to the required libraries
 IF(WIN32)
 	TARGET_LINK_LIBRARIES(
-		packetcapture
+		sniffer
 		wpcap
 		ws2_32
 	)
 ELSE(WIN32)
 	TARGET_LINK_LIBRARIES(
-		packetcapture
+		sniffer
 		pcap
 	)
 ENDIF(WIN32)
