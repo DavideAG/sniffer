@@ -1,5 +1,6 @@
 #include <sstream>
 #include "packetcapture.h"
+#include <arpa/inet.h>
 #include "netinet/ether.h"
 #include "netinet/ip.h"
 #include "netinet/tcp.h"
@@ -37,7 +38,7 @@ void Packetcapture::selectInterface()
         std::cout << "[Packetcapture] - Bad value at selectInterface" << std::endl;
         throw "Bad value";
     }
-    
+
     for (temp=interfaces, j=0; j<i; temp=temp->next, j++) {}
 
     this->adapter = new std::string(std::move(temp->name));
@@ -63,15 +64,28 @@ void Packetcapture::attachInterface()
 void dispatcher_handler(u_char *temp1, const struct pcap_pkthdr *header, const u_char *pkt_data)
 {
     std::stringstream out;
+
+    /* layer 2 parsing */
     struct ether_header *ethernet;
     ethernet = (struct ether_header *) pkt_data;
-    const struct ether_addr *__addr_dst = (const struct ether_addr *) ethernet->ether_dhost;
-    const struct ether_addr *__addr_src = (const struct ether_addr *) ethernet->ether_shost;
+    if (sizeof(*ethernet) > header->caplen)
+        return;
 
-    //todo: ciclare per header_caplen
-    out << header->ts.tv_sec << ":" << header->ts.tv_usec << " " << ether_ntoa(__addr_src) << "->" <<  ether_ntoa(__addr_src);
+    const struct ether_addr *__addr_dst = (const struct ether_addr *) &ethernet->ether_dhost;
+    const struct ether_addr *__addr_src = (const struct ether_addr *) &ethernet->ether_shost;
+    
+    /* layer 3 parsing */
+    struct ip *ip;
+    ip = (struct ip *) pkt_data + sizeof(*ethernet);
+    unsigned int iph_len = ip->ip_hl * 4;
+    if (sizeof(*ethernet) + iph_len > header->caplen)
+        return;
+
+    
+    out << header->ts.tv_sec << ":" << header->ts.tv_usec << "  " << ether_ntoa(__addr_src) << " -> " <<  ether_ntoa(__addr_dst) << "  ";
+    out << inet_ntoa(ip->ip_src) << " -> " << inet_ntoa(ip->ip_dst);
+    
     std::cout << out.str() << std::endl;
-
 }
 
 
