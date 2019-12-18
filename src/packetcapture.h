@@ -16,5 +16,4 @@ class Packetcapture
     pcap_if_t* showInterfaces(int& numberOfInterfaces);
     void selectInterface();
     void attachInterface();
-
 };

@@ -1,4 +1,8 @@
+#include <sstream>
 #include "packetcapture.h"
+#include "netinet/ether.h"
+#include "netinet/ip.h"
+#include "netinet/tcp.h"
 
 pcap_if_t* Packetcapture::showInterfaces(int& numberOfInterfaces)
 {
@@ -20,6 +24,7 @@ pcap_if_t* Packetcapture::showInterfaces(int& numberOfInterfaces)
     return interfaces;
 }
 
+
 void Packetcapture::selectInterface()
 {
     int i = -1, j = 0;
@@ -38,6 +43,7 @@ void Packetcapture::selectInterface()
     this->adapter = new std::string(std::move(temp->name));
 }
 
+
 void Packetcapture::attachInterface()
 {
     char errbuf[PCAP_ERRBUF_SIZE];
@@ -50,11 +56,34 @@ void Packetcapture::attachInterface()
         throw "pcap_open_live error";
     }
 
-    std::cout << "attached to " << adapter[0] << std::endl;
+    std::cout << "attached to " << adapter[0] << std::endl << std::endl;
 }
+
+
+void dispatcher_handler(u_char *temp1, const struct pcap_pkthdr *header, const u_char *pkt_data)
+{
+    std::stringstream out;
+    struct ether_header *ethernet;
+    ethernet = (struct ether_header *) pkt_data;
+    const struct ether_addr *__addr_dst = (const struct ether_addr *) ethernet->ether_dhost;
+    const struct ether_addr *__addr_src = (const struct ether_addr *) ethernet->ether_shost;
+
+    //todo: ciclare per header_caplen
+    out << header->ts.tv_sec << ":" << header->ts.tv_usec << " " << ether_ntoa(__addr_src) << "->" <<  ether_ntoa(__addr_src);
+    std::cout << out.str() << std::endl;
+
+}
+
 
 Packetcapture::Packetcapture()
 {
     selectInterface();
     attachInterface();
+
+    //applyFilter()   //TODO: actually no filters are used
+
+    pcap_loop(handle, 0, dispatcher_handler, nullptr);
+
+    pcap_close(handle);
+
 }
