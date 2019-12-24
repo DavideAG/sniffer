@@ -75,19 +75,21 @@ void dispatcher_handler(u_char *temp1, const struct pcap_pkthdr *header, const u
     const struct ether_addr *__addr_src = (const struct ether_addr *) &ethernet->ether_shost;
     
     /* layer 3 parsing */
-    if (ntohs(ethernet->ether_type) == ETH_P_IP)
-    {
-        struct ip *ip;
-        ip = (struct ip *) (pkt_data + sizeof(*ethernet));
-        unsigned int iph_len = ip->ip_hl * 4;
-        if (sizeof(*ethernet) + iph_len > header->caplen)
-            return;
+    if (ntohs(ethernet->ether_type) != ETH_P_IP)
+        return;
 
-        out << header->ts.tv_sec << ":" << header->ts.tv_usec << "  " << ether_ntoa(__addr_src) << " -> " <<  ether_ntoa(__addr_dst) << "  ";
-        out << inet_ntoa(ip->ip_src) << " -> " << inet_ntoa(ip->ip_dst);
-        
-        std::cout << out.str() << std::endl;
-    }
+    struct ip *ip;
+    ip = (struct ip *) (pkt_data + sizeof(*ethernet));
+    unsigned int iph_len = ip->ip_hl * 4;
+    if (sizeof(*ethernet) + iph_len > header->caplen)
+        return;
+
+    std::cout << "Protocol: " << uint(ip->ip_p) << std::endl;
+
+    //out << header->ts.tv_sec << ":" << header->ts.tv_usec << "  " << ether_ntoa(__addr_src) << " -> " <<  ether_ntoa(__addr_dst) << "  ";
+    //out << inet_ntoa(ip->ip_src) << " -> " << inet_ntoa(ip->ip_dst);
+    
+    //std::cout << out.str() << std::endl;
 }
 
 
