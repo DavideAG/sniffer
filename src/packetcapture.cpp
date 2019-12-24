@@ -4,6 +4,7 @@
 #include "netinet/ether.h"
 #include "netinet/ip.h"
 #include "netinet/tcp.h"
+#include "netinet/udp.h"
 
 pcap_if_t* Packetcapture::showInterfaces(int& numberOfInterfaces)
 {
@@ -84,12 +85,43 @@ void dispatcher_handler(u_char *temp1, const struct pcap_pkthdr *header, const u
     if (sizeof(*ethernet) + iph_len > header->caplen)
         return;
 
-    std::cout << "Protocol: " << uint(ip->ip_p) << std::endl;
+    /* layer 4 parsing */
+    std::string protocol;
+    struct tcphdr *tcp = nullptr;
+    struct udphdr *udp = nullptr;
+    uint16_t sport = 0, dport = 0;
+    if (uint64_t(ip->ip_p) == IPPROTO_TCP)  /* TCP packet */
+    {
+        protocol = "TCP";
+        tcp = (struct tcphdr *)(pkt_data + sizeof(*ethernet) + iph_len);
+        
+        if (sizeof(*ethernet) + iph_len + sizeof(tcp) > header->caplen)
+            return;
+        
+        sport = tcp->source;
+        dport = tcp->dest;
+    }
+    else if (uint(ip->ip_p) == IPPROTO_UDP) /* UDP packet */
+    {
+        protocol = "UDP";
+        udp = (struct udphdr *)(pkt_data + sizeof(*ethernet) + iph_len);
 
-    //out << header->ts.tv_sec << ":" << header->ts.tv_usec << "  " << ether_ntoa(__addr_src) << " -> " <<  ether_ntoa(__addr_dst) << "  ";
-    //out << inet_ntoa(ip->ip_src) << " -> " << inet_ntoa(ip->ip_dst);
+        if (sizeof(*ethernet) + iph_len + sizeof(udp) > header->caplen)
+            return;
+
+        sport = udp->source;
+        dport = udp->dest;
+    }
+    else                                    /* no TCP or UDP packet */
+        return;
     
-    //std::cout << out.str() << std::endl;
+
+    /* output */
+    out << header->ts.tv_sec << ":" << header->ts.tv_usec << " \t" << ether_ntoa(__addr_src) << " -> " <<  ether_ntoa(__addr_dst) << " \t";
+    out << inet_ntoa(ip->ip_src) << " -> " << inet_ntoa(ip->ip_dst) << "\t\t";
+    out << protocol << "\t" << ntohs(sport) << " -> " << ntohs(dport);
+    
+    std::cout << out.str() << std::endl;
 }
 
 
