@@ -1,6 +1,7 @@
 #include <sstream>
-#include "packetcapture.h"
+#include <string>
 #include <arpa/inet.h>
+#include "packetcapture.h"
 #include "netinet/ether.h"
 #include "netinet/ip.h"
 #include "netinet/tcp.h"
@@ -90,6 +91,8 @@ void dispatcher_handler(u_char *temp1, const struct pcap_pkthdr *header, const u
     struct tcphdr *tcp = nullptr;
     struct udphdr *udp = nullptr;
     uint16_t sport = 0, dport = 0;
+    bool is_get_or_post = false;
+    std::string uri;
     if (uint64_t(ip->ip_p) == IPPROTO_TCP)  /* TCP packet */
     {
         protocol = "TCP";
@@ -100,6 +103,25 @@ void dispatcher_handler(u_char *temp1, const struct pcap_pkthdr *header, const u
         
         sport = tcp->source;
         dport = tcp->dest;
+
+        if (ntohs(dport) == 80)
+        {
+            std::string http((char *)(pkt_data + sizeof(*ethernet) + iph_len + sizeof(*tcp)));
+            if ((http.find("GET") != std::string::npos) || (http.find("POST") != std::string::npos))
+            {              
+                is_get_or_post = true;
+                size_t host_pos = http.find("Host: ");
+                
+                if (host_pos == std::string::npos)
+                {
+                    std::cout << "[Packetcapture] - Error at dispatcher_handler - " << "Error - no 'Host: ' found" << std::endl;
+                    throw "Error - no 'Host: ' found";
+                }
+
+                uri = std::string((const char *)(http.c_str() + host_pos + 6));     /* afther 'Host: ' */
+                uri = uri.substr(0, uri.find("\n"));
+            }
+        }
     }
     else if (uint(ip->ip_p) == IPPROTO_UDP) /* UDP packet */
     {
@@ -119,7 +141,9 @@ void dispatcher_handler(u_char *temp1, const struct pcap_pkthdr *header, const u
     /* output */
     out << header->ts.tv_sec << ":" << header->ts.tv_usec << " \t" << ether_ntoa(__addr_src) << " -> " <<  ether_ntoa(__addr_dst) << " \t";
     out << inet_ntoa(ip->ip_src) << " -> " << inet_ntoa(ip->ip_dst) << "\t\t";
-    out << protocol << "\t" << ntohs(sport) << " -> " << ntohs(dport);
+    out << protocol << "\t" << ntohs(sport) << " -> " << ntohs(dport) << "\t";
+    if (is_get_or_post)
+        out << uri;
     
     std::cout << out.str() << std::endl;
 }
