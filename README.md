@@ -35,7 +35,11 @@ sudo ./sniffer
 
 ## Start to use the tool
 
-<img src="./images/launcher.png" alt="sniffer_launcher" style="zoom:50%;" />
+<p align="center">
+<img src="./images/launcher.png" 
+      alt="interface launcher" 
+      height="225" />
+</p>
 
 First you have to select the interface to use for your sniffing session.
 The list of all interfaces that are present in your system will be displayed when your sniffer will be launched as well.
